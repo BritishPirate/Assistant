@@ -38,18 +38,11 @@ def main():
 
         event = calendarManager.newEvent('eventSummary', 'Narnia', 'EventDescription', datetime(2023, 2, 9, 15, 00, 00), datetime(2023, 2, 9, 16, 00, 00), None, None, reminders)
 
-        event = calendarManager.addEvent(service, event)
+        #event = calendarManager.addEvent(service, event)
 
-        delEvent = calendarManager.deleteEvent(service, event['id'])
-        print(delEvent)
+        #delEvent = calendarManager.deleteEvent(service, event['id'])
 
-        # Call the Calendar API
-        now = datetime.utcnow().isoformat() + 'Z'  # 'Z' indicates UTC time
-        print('Getting the upcoming 10 events')
-        events_result = service.events().list(calendarId='primary', timeMin=now,
-                                              maxResults=10, singleEvents=True,
-                                              orderBy='startTime').execute()
-        events = events_result.get('items', [])
+        events = calendarManager.findEvents(service=service, searchText='apple')
 
         if not events:
             print('No upcoming events found.')

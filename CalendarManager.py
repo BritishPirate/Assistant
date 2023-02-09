@@ -48,12 +48,26 @@ class CalendarManager:
 
     def addEvent(self, service, event, calendarId = None):
         event = service.events().insert(calendarId=('primary' if calendarId == None else calendarId), body=event).execute()
-        print('Event created: %s' % (event.get('htmlLink')))
         return event
 
     def deleteEvent(self, service, eventId, calendarId = None):
         event = service.events().delete(calendarId=('primary' if calendarId == None else calendarId), eventId = eventId).execute()
         return event
+
+    def getEvent(self, service, eventId, calendarId = None):
+        event = service.events().get(calendarId=('primary' if calendarId == None else calendarId), eventId = eventId).execute()
+        return event
+
+    def findEvents(self, service, searchText = None, timeMin = None, timeMax = None, compressReocurring = True, calendarId = None): #Get a list of the events, and match them up to the event given
+        response = service.events().list(calendarId=('primary' if calendarId == None else calendarId), 
+                                        timeMin=timeMin,
+                                        timeMax=timeMax, 
+                                        singleEvents=compressReocurring,
+                                        q=searchText,
+                                        orderBy='startTime').execute()
+        eventList = response.get('items', []) 
+        return eventList #ToDO: Look at SynchToken to check for event changes? + Test this!
+        
 
     def isoTime(self, datetime):
         #datetime.now(timezone.utc).replace(microsecond=0).isoformat()
