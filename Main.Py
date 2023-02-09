@@ -1,11 +1,9 @@
 from __future__ import print_function
 
-
 import os.path
-import CalendarManager
-import Authenticator
-import pytz
 
+from CalendarManager import CalendarManager
+from Authenticator import Authenticator
 from datetime import datetime, timezone
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
@@ -16,10 +14,10 @@ from googleapiclient.errors import HttpError
 # If modifying these scopes, delete the file token.json.
 SCOPES = ['https://www.googleapis.com/auth/calendar']
 
-authenticator = Authenticator.Authenticator() # Selecting an instance of the class
+authenticator = Authenticator() # Selecting an instance of the class
 authenticator.authenticate()
 
-calendarManager = CalendarManager.CalendarManager() # Selecting the class
+calendarManager = CalendarManager() # Selecting the class
 
 def main():
     """Shows basic usage of the Google Calendar API.
@@ -38,9 +36,12 @@ def main():
             ('email', 24 * 60 * 2)
         ]
 
-        event = calendarManager.newEvent('eventSummary', 'Narnia', 'EventDescription', datetime(2023, 2, 8, 15, 00, 00), datetime(2023, 2, 8, 16, 00, 00), None, None, reminders)
+        event = calendarManager.newEvent('eventSummary', 'Narnia', 'EventDescription', datetime(2023, 2, 9, 15, 00, 00), datetime(2023, 2, 9, 16, 00, 00), None, None, reminders)
 
-        calendarManager.addEvent(service, event)
+        event = calendarManager.addEvent(service, event)
+
+        delEvent = calendarManager.deleteEvent(service, event['id'])
+        print(delEvent)
 
         # Call the Calendar API
         now = datetime.utcnow().isoformat() + 'Z'  # 'Z' indicates UTC time

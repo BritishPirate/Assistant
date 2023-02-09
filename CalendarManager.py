@@ -46,9 +46,14 @@ class CalendarManager:
         }
         return event
 
-    def addEvent(self, service, event):
-        event = service.events().insert(calendarId='primary', body=event).execute()
+    def addEvent(self, service, event, calendarId = None):
+        event = service.events().insert(calendarId=('primary' if calendarId == None else calendarId), body=event).execute()
         print('Event created: %s' % (event.get('htmlLink')))
+        return event
+
+    def deleteEvent(self, service, eventId, calendarId = None):
+        event = service.events().delete(calendarId=('primary' if calendarId == None else calendarId), eventId = eventId).execute()
+        return event
 
     def isoTime(self, datetime):
         #datetime.now(timezone.utc).replace(microsecond=0).isoformat()
