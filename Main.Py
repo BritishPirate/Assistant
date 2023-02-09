@@ -4,6 +4,7 @@ from __future__ import print_function
 import os.path
 import CalendarManager
 import Authenticator
+import pytz
 
 from datetime import datetime, timezone
 from google.auth.transport.requests import Request
@@ -24,7 +25,6 @@ def main():
     """Shows basic usage of the Google Calendar API.
     Prints the start and name of the next 10 events on the user's calendar.
     """
-
     
     creds = authenticator.creds
 
@@ -38,7 +38,7 @@ def main():
             ('email', 24 * 60 * 2)
         ]
 
-        event = calendarManager.newEvent('eventSummary', 'Narnia', 'EventDescription', datetime(2023, 2, 8, 15, 00, 00), datetime(2023, 2, 8, 16, 00, 00), None, None   , reminders)
+        event = calendarManager.newEvent('eventSummary', 'Narnia', 'EventDescription', datetime(2023, 2, 8, 15, 00, 00), datetime(2023, 2, 8, 16, 00, 00), None, None, reminders)
 
         calendarManager.addEvent(service, event)
 

@@ -1,6 +1,8 @@
 
 from datetime import datetime, timezone
 
+import pytz
+
 class CalendarManager:
 
     def newEvent(self, summary, location, description, startTime, endTime, recurrance = None, attendees = None, reminders = None): 
@@ -42,7 +44,6 @@ class CalendarManager:
                if reminders != None else None,
             },
         }
-        print(event)
         return event
 
     def addEvent(self, service, event):
@@ -51,7 +52,8 @@ class CalendarManager:
 
     def isoTime(self, datetime):
         #datetime.now(timezone.utc).replace(microsecond=0).isoformat()
-        ret = datetime.astimezone(timezone.utc).replace(microsecond=0).isoformat()
+        
+        ret = datetime.astimezone(pytz.timezone("Europe/London")).replace(microsecond=0).isoformat()
         return ret
 
     def formatReminders(self, reminders):
