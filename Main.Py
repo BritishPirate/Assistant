@@ -1,6 +1,7 @@
 from __future__ import print_function
 
 import os.path
+import SpeechRecognitionManager
 
 from CalendarManager import CalendarManager
 from Authenticator import Authenticator
@@ -24,18 +25,16 @@ def main():
     Prints the start and name of the next 10 events on the user's calendar.
     """
     
-    creds = authenticator.creds
 
+    creds = authenticator.creds
+    """
     try:
         service = build('calendar', 'v3', credentials=creds)
-
         attendees = ['nur10000@gmail.com']
-
         reminders = [
             ('popup', 24 * 60),
             ('email', 24 * 60 * 2)
         ]
-
         event = calendarManager.newEvent('eventSummary', 'Narnia', 'EventDescription', datetime(2023, 2, 9, 15, 00, 00), datetime(2023, 2, 9, 16, 00, 00), None, None, reminders)
 
         #event = calendarManager.addEvent(service, event)
@@ -52,10 +51,10 @@ def main():
         for event in events:
             start = event['start'].get('dateTime', event['start'].get('date'))
             print(start, event['summary'])
-
+    
     except HttpError as error:
         print('An error occurred: %s' % error)
-
+    """
 
 if __name__ == '__main__':
     main()
