@@ -1,7 +1,7 @@
 from __future__ import print_function
 
 import os.path
-import SpeechRecognitionManager
+from SpeechRecognitionManager import SpeechRecognitionManager as srm
 
 from CalendarManager import CalendarManager
 from Authenticator import Authenticator
@@ -25,7 +25,6 @@ def main():
     Prints the start and name of the next 10 events on the user's calendar.
     """
     
-
     creds = authenticator.creds
     """
     try:
