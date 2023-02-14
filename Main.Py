@@ -1,22 +1,26 @@
 from __future__ import print_function
 
 import os.path
-from SpeechRecognitionManager import SpeechRecognitionManager as srm
 
+from ListManager import ListManager as lm
+from SpeechRecognitionManager import SpeechRecognitionManager as srm
 from CalendarManager import CalendarManager
 from Authenticator import Authenticator
-from datetime import datetime, timezone
+from datetime import datetime, timezone, date
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
+#TODO:
+# Pick a list service. 
+
 # If modifying these scopes, delete the file token.json.
 SCOPES = ['https://www.googleapis.com/auth/calendar']
 
 authenticator = Authenticator() # Selecting an instance of the class
-authenticator.authenticate()
+authenticator.authenticateGoogle()
 
 calendarManager = CalendarManager() # Selecting the class
 
@@ -24,8 +28,17 @@ def main():
     """Shows basic usage of the Google Calendar API.
     Prints the start and name of the next 10 events on the user's calendar.
     """
-    
-    creds = authenticator.creds
+
+    print(date(2023, 2, 15).isoformat())
+    print(datetime(2023, 2, 15, 15, 25, 13).isoformat())
+
+    lm().addTask(content='TestContent', projectId='2307738756')
+
+    # tasks = lm().getTasks(projectId='2307738756')
+    # for task in tasks:
+    #     print(task)
+    #     print()
+    # creds = authenticator.creds
     """
     try:
         service = build('calendar', 'v3', credentials=creds)
